@@ -5,4 +5,5 @@
   :components ((:file "package")
                (:file "library")
                (:cffi-grovel-file "types")
+               (:file "constants")
                (:file "functions")))
