@@ -69,11 +69,33 @@
 
 (defcfun ("GetMousePosition" get-mouse-position) (:struct vector2))
 
+(defcfun ("GetMouseX" get-mouse-x) :int)
+
+(defcfun ("GetMouseY" get-mouse-y) :int)
+
 (defun make-rectangle (&key x y width height)
   (list 'x (coerce x 'float)
         'y (coerce y 'float)
         'width (coerce width 'float)
         'height (coerce height 'float)))
+
+(defun rectangle-x (object)
+  (getf object 'x))
+
+(defun (setf rectangle-x) (new-value object)
+  (setf (getf object 'x) new-value))
+
+(defun rectangle-y (object)
+  (getf object 'y))
+
+(defun (setf rectangle-y) (new-value object)
+  (setf (getf object 'y) new-value))
+
+(defun rectangle-width (object)
+  (getf object 'width))
+
+(defun rectangle-height (object)
+  (getf object 'height))
 
 (defcfun ("DrawTexture" draw-texture) :void
   (texture (:struct texture))
@@ -145,6 +167,11 @@
   (end-pos-y :int)
   (color (:struct color)))
 
+(defcfun ("DrawLineV" draw-line-v) :void
+  (start-pos (:struct vector2))
+  (end-pos (:struct vector2))
+  (color (:struct color)))
+
 (defcfun ("LoadRenderTexture" load-render-texture) (:struct render-texture)
   (width :int)
   (height :int))
@@ -179,6 +206,10 @@
   (height :int)
   (color (:struct color)))
 
+(defcfun ("DrawRectangleRec" draw-rectangle-rec) :void
+  (rec (:struct rectangle))
+  (color (:struct color)))
+
 (defcfun ("LoadTextureFromImage" load-texture-from-image) (:struct texture)
   (image (:struct image)))
 
@@ -205,3 +236,15 @@
 
 (defcfun ("ImageFlipVertical" iamge-flip-vertical) :void
   (image (:pointer (:struct image))))
+
+(defcfun ("CheckCollisionRecs" check-collision-recs) :bool
+  (rec1 (:struct rectangle))
+  (rec2 (:struct rectangle)))
+
+(defcfun ("GetCollisionRec" get-collision-rec) (:struct rectangle)
+  (rec1 (:struct rectangle))
+  (rec2 (:struct rectangle)))
+
+(defcfun ("MeasureText" measure-text) :int
+  (text :string)
+  (font-size :int))
