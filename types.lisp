@@ -44,6 +44,7 @@
 
 (cenum keyboard-key
        ((:r "KEY_R"))
+       ((:x "KEY_X"))
        ((:space "KEY_SPACE"))
        ((:enter "KEY_ENTER")))
 

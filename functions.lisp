@@ -176,6 +176,9 @@
   (width :int)
   (height :int))
 
+(defcfun ("UnloadRenderTexture" unload-render-texture) :void
+  (target (:struct render-texture)))
+
 (defun render-texture-texture (object)
   (getf object 'texture))
 
@@ -210,6 +213,12 @@
   (rec (:struct rectangle))
   (color (:struct color)))
 
+(defcfun ("DrawCircle" draw-circle) :void
+  (center-x :int)
+  (center-y :int)
+  (radius :float)
+  (color (:struct color)))
+
 (defcfun ("LoadTextureFromImage" load-texture-from-image) (:struct texture)
   (image (:struct image)))
 
@@ -241,6 +250,11 @@
   (rec1 (:struct rectangle))
   (rec2 (:struct rectangle)))
 
+(defcfun ("CheckCollisionCircleRec" check-collision-circle-rec) :bool
+  (center (:struct vector2))
+  (radius :float)
+  (rec (:struct rectangle)))
+
 (defcfun ("GetCollisionRec" get-collision-rec) (:struct rectangle)
   (rec1 (:struct rectangle))
   (rec2 (:struct rectangle)))
@@ -248,3 +262,7 @@
 (defcfun ("MeasureText" measure-text) :int
   (text :string)
   (font-size :int))
+
+(defcfun ("ShowCursor" show-cursor) :void)
+
+(defcfun ("HideCursor" hide-cursor) :void)

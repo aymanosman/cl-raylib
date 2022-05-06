@@ -9,3 +9,5 @@
 (defparameter +blank+ '(r 0 g 0 b 0 a 0))
 (defparameter +gold+ '(r 255 g 203 b 0 a 255))
 (defparameter +lime+ '(r 0 g 158 b 47 a 255))
+(defparameter +yellow+ '(r 253 g 249 b 0 a 255))
+(defparameter +purple+ '(r 200 g 122 b 255 a 255))
