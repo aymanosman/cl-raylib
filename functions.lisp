@@ -20,13 +20,25 @@
 (defcfun ("SetTargetFPS" set-target-fps) :void
   (fps :int))
 
+(defcfun ("LoadWaveFromMemory" load-wave-from-memory) (:struct wave)
+  (file-type :string)
+  (file-data (:pointer :unsigned-char))
+  (data-size :int))
+
+(defun make-wave-from-memory (file-type file-data)
+  (with-foreign-object (file-data-ptr :uint8 (length file-data))
+    (loop :for i :from 0 :below (length file-data)
+          :do (setf (mem-aref file-data-ptr :uint8 i) (aref file-data i)))
+    (load-wave-from-memory file-type file-data-ptr (length file-data))))
+
+(defcfun ("LoadSoundFromWave" load-sound-from-wave) (:struct sound)
+  (wave (:struct wave)))
+
 (defcfun ("LoadSound" load-sound) (:struct sound)
   (filename :string))
 
-
 (defcfun ("PlaySound" play-sound) :void
   (sound (:struct sound)))
-
 
 (defcfun ("LoadTexture" load-texture) (:struct texture)
   (file-name :string))
@@ -229,8 +241,8 @@
 
 (defun alloc-image (image)
   (let ((pointer (foreign-alloc '(:struct image))))
-    (with-foreign-slots ((data width height mipmaps format) pointer (:struct image))
-      (setf data (getf image 'data))
+    (with-foreign-slots ((width height mipmaps format) pointer (:struct image))
+      (setf (foreign-slot-value pointer '(:struct image) 'data) (getf image 'data))
       (setf width (getf image 'width))
       (setf height (getf image 'height))
       (setf mipmaps (getf image 'mipmaps))
@@ -243,7 +255,7 @@
   (pos-y :int)
   (color (:struct color)))
 
-(defcfun ("ImageFlipVertical" iamge-flip-vertical) :void
+(defcfun ("ImageFlipVertical" image-flip-vertical) :void
   (image (:pointer (:struct image))))
 
 (defcfun ("CheckCollisionRecs" check-collision-recs) :bool

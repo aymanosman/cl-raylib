@@ -8,6 +8,13 @@
          (sample-size "sampleSize" :type :unsigned-int)
          (channels "channels" :type :unsigned-int))
 
+(cstruct wave "Wave"
+         (frame-count "frameCount" :type :unsigned-int)
+         (sample-rate "sampleRate" :type :unsigned-int)
+         (sample-size "sampleSize" :type :unsigned-int)
+         (channels "channels" :type :unsigned-int)
+         (data "data" :type :pointer))
+
 (cstruct sound "Sound"
          (stream "stream" :type (:struct audio-stream))
          (frame-count "frameCount" :type :unsigned-int))
@@ -43,9 +50,12 @@
        ((:middle "MOUSE_BUTTON_MIDDLE")))
 
 (cenum keyboard-key
+       ((:p "KEY_P"))
        ((:r "KEY_R"))
        ((:x "KEY_X"))
+       ((:z "KEY_Z"))
        ((:space "KEY_SPACE"))
+       ((:tab "KEY_TAB"))
        ((:enter "KEY_ENTER")))
 
 (cstruct vector2 "Vector2"
